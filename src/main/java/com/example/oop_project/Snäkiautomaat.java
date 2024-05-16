@@ -80,10 +80,9 @@ public class Snäkiautomaat implements Müügiautomaat {
 
     // Väljastab toodete hinnad
     @Override
-    public void väljastaToodeteHinnad() {
+    public void väljastaToodeteHinnad() throws MasinRikkisErind {
         if (getKasMasinOnRikkis()) { // Kontrollib, kas masin on rikkis
-            System.out.println("Vabandame, masin on rikkis!");
-            return;
+            throw new MasinRikkisErind("Masin on rikkis! Vabandame", 0);
         }
         int number = 1;
         // Väljastab toodete nimed ja hinnad
@@ -95,23 +94,19 @@ public class Snäkiautomaat implements Müügiautomaat {
 
     // Sooritab ostu
     @Override
-    public double sooritaOst(int tooteNumber, double raha) {
+    public double sooritaOst(int tooteNumber, double raha) throws MasinRikkisErind, SnäkiautomaatErind {
         if (getKasMasinOnRikkis()) { // Kontrollib, kas masin on rikkis
-            System.out.println("Vabandame, masin on rikkis!");
-            return raha;
+            throw new MasinRikkisErind("Masin on rikkis! Vabandame", raha);
         }
 
         if (tooteNumber < 1 || tooteNumber > pakutavadSnäkid.size()) { // Kontrollib, kas toode on olemas
-            System.out.println("Sellist toodet ei ole olemas!");
-            return raha;
+            throw new SnäkiautomaatErind("Toodet ei eksisteeri!", raha);
         } else {
             Toode valitudToode = pakutavadSnäkid.get(tooteNumber - 1);
             if (valitudToode.getKogus() == 0) { // Kontrollib, kas toode on otsas
-                System.out.println("Toode on otsas! Vabandame");
-                return raha;
+                throw new SnäkiautomaatErind("Toode on otsas!", raha);
             } else if (raha < valitudToode.getHind()) { // Kontrollib, kas raha on piisavalt
-                System.out.println("Raha ei ole piisavalt!");
-                return raha;
+                throw new SnäkiautomaatErind("Raha ei ole piisav!", raha);
             } else { // Kui kõik on korras, siis ostetakse toode
                 valitudToode.setKogus(valitudToode.getKogus() - 1);
                 System.out.println("Toode ostetud!");

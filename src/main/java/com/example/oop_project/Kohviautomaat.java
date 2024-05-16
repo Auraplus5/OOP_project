@@ -73,10 +73,9 @@ public class Kohviautomaat implements Müügiautomaat {
 
     // Meetod, mis väljastab kohvide hinnad
     @Override
-    public void väljastaToodeteHinnad() {
+    public void väljastaToodeteHinnad() throws MasinRikkisErind {
         if (getKasMasinOnRikkis()) { // Kui masin on rikkis, siis väljume meetodist
-            System.out.println("Masin on rikkis! Vabandame");
-            return;
+            throw new MasinRikkisErind("Masin on rikkis! Vabandame",0);
         }
         int number = 1;
         for (Kohv elem : pakutavadKohvid) {
@@ -91,10 +90,9 @@ public class Kohviautomaat implements Müügiautomaat {
 
     // Meetod, mis valmistab kohvi vastavalt valitud kohvile
     @Override
-    public double sooritaOst(int tooteNumber, double raha) {
+    public double sooritaOst(int tooteNumber, double raha) throws MasinRikkisErind, KohimasinaErind {
         if (getKasMasinOnRikkis()) { // Kui masin on rikkis, siis väljume meetodist
-            System.out.println("Masin on rikkis! Vabandame");
-            return raha;
+            throw new MasinRikkisErind("Masin on rikkis! Vabandame",raha);
         }
 
         if (tooteNumber < 1 || tooteNumber > pakutavadKohvid.size()) { // Kontrollime, kas valitud toode on olemas
@@ -103,14 +101,11 @@ public class Kohviautomaat implements Müügiautomaat {
         } else {
             Kohv valitudKohv = pakutavadKohvid.get(tooteNumber - 1);
             if (raha < valitudKohv.getKohviHind()) { // Kontrollime, kas raha on piisavalt
-                System.out.println("Raha ei ole piisavalt!");
-                return raha;
+                throw new KohimasinaErind("Pole piisavalt raha kohvi ostmiseks", raha);
             } else if (valitudKohv.getKohviSeguKogusL() > getKohviSeguKogusLiitrites()) { // Kontrollime, kas on piisavalt segu ja piima
-                System.out.println("Pole piisavalt segu kohvi valmistamiseks. Valige mõni muu kohv.");
-                return raha;
+                throw new KohimasinaErind("Pole piisavalt segu kohvi valmistamiseks", raha);
             } else if (valitudKohv.getPiimaKogusL() > getPiimaKogusLiitrites()) {
-                System.out.println("Pole piisavalt piima kohvi valmistamiseks. Valige mõni muu kohv.");
-                return raha;
+                throw new KohimasinaErind("Pole piisavalt piima kohvi valmistamiseks. Valige mõni muu kohv.", raha);
             } else { // Kui kõik on korras, siis valmistame kohvi
                 setKohviSeguKogusLiitrites(getKohviSeguKogusLiitrites() - valitudKohv.getKohviSeguKogusL());
                 setPiimaKogusLiitrites(getPiimaKogusLiitrites() - valitudKohv.getPiimaKogusL());

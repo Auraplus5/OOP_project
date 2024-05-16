@@ -137,6 +137,8 @@ public class MasinaApp extends Application {
                 kohviSisend.clear();
             } catch (NumberFormatException | IndexOutOfBoundsException ex) {
                 näitaHoiatust("Vale sisend", "Palun sisestage korrektne valiku number.");
+            } catch (MasinRikkisErind | KohimasinaErind ex) {
+                näitaHoiatust("Hoiatus!", ex.getMessage());
             }
         });
 
@@ -148,7 +150,7 @@ public class MasinaApp extends Application {
         VBox snäkiPaneel = new VBox(10);
         ListView<String> snäkiListView = new ListView<>();
         uuendaSnäkiList(snäkiListView);
-        ostaSnäkiNupp = new Button("Osta Snäkki");
+        ostaSnäkiNupp = new Button("Osta Snäkk");
         snäkiSisend = new TextField();
         snäkiSisend.setPromptText("Sisesta toote number");
 
@@ -161,6 +163,8 @@ public class MasinaApp extends Application {
                 snäkiSisend.clear();
             } catch (NumberFormatException | IndexOutOfBoundsException ex) {
                 näitaHoiatust("Vale sisend", "Palun sisestage korrektne toote number.");
+            } catch (SnäkiautomaatErind | MasinRikkisErind ex) {
+                näitaHoiatust("Hoiatus!", ex.getMessage());
             }
         });
 

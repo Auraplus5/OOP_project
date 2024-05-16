@@ -1,11 +1,9 @@
 package com.example.oop_project;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Peaklass {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MasinRikkisErind, KohimasinaErind, SnäkiautomaatErind {
 
         // loome snäkiautomaadi ja lisame tooted
         Toode snickers = new Toode("Snickers", 1.99, 4);
