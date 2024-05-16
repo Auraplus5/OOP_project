@@ -60,15 +60,21 @@ public class MasinaApp extends Application {
         // Raha lisamise nupu tegevus
         lisaRahaNupp.setOnAction(e -> {
             try {
-                raha += Double.parseDouble(rahaSisend.getText());
-                saldo.setText("Saldo: " + String.format("%.2f", raha) + "€");
-                rahaSisend.clear();
+                double sisestatudRaha = Double.parseDouble(rahaSisend.getText());
+                if (sisestatudRaha <= 0) {
+                    näitaHoiatust("Vale sisend", "Palun sisestage positiivne rahasumma.");
 
-                // Enable buy buttons and input fields
-                ostaKohviNupp.setDisable(false);
-                kohviSisend.setDisable(false);
-                ostaSnäkiNupp.setDisable(false);
-                snäkiSisend.setDisable(false);
+                } else {
+                    raha += sisestatudRaha;
+                    saldo.setText("Saldo: " + String.format("%.2f", raha) + "€");
+                    rahaSisend.clear();
+
+                    // Enable buy buttons and input fields
+                    ostaKohviNupp.setDisable(false);
+                    kohviSisend.setDisable(false);
+                    ostaSnäkiNupp.setDisable(false);
+                    snäkiSisend.setDisable(false);
+                }
             } catch (NumberFormatException ex) {
                 näitaHoiatust("Vale sisend", "Palun sisestage korrektne rahasumma.");
             }
