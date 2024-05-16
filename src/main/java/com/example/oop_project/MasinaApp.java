@@ -17,6 +17,10 @@ public class MasinaApp extends Application {
     private Snäkiautomaat snäkiautomaat;
     private double raha = 0.0;
     private Label saldo;
+    private Button ostaKohviNupp;
+    private TextField kohviSisend;
+    private Button ostaSnäkiNupp;
+    private TextField snäkiSisend;
 
     public static void main(String[] args) {
         launch(args);
@@ -47,12 +51,24 @@ public class MasinaApp extends Application {
         Tab snäkiTab = new Tab("Snäkiautomaat", looSnäkiPaneel());
         tabPane.getTabs().addAll(kohviTab, snäkiTab);
 
+        // Disable buy buttons and input fields initially
+        ostaKohviNupp.setDisable(true);
+        kohviSisend.setDisable(true);
+        ostaSnäkiNupp.setDisable(true);
+        snäkiSisend.setDisable(true);
+
         // Raha lisamise nupu tegevus
         lisaRahaNupp.setOnAction(e -> {
             try {
                 raha += Double.parseDouble(rahaSisend.getText());
                 saldo.setText("Saldo: " + String.format("%.2f", raha) + "€");
                 rahaSisend.clear();
+
+                // Enable buy buttons and input fields
+                ostaKohviNupp.setDisable(false);
+                kohviSisend.setDisable(false);
+                ostaSnäkiNupp.setDisable(false);
+                snäkiSisend.setDisable(false);
             } catch (NumberFormatException ex) {
                 näitaHoiatust("Vale sisend", "Palun sisestage korrektne rahasumma.");
             }
@@ -108,8 +124,8 @@ public class MasinaApp extends Application {
         VBox kohviPaneel = new VBox(10);
         ListView<String> kohviListView = new ListView<>();
         uuendaKohviList(kohviListView);
-        Button ostaKohviNupp = new Button("Osta Kohvi");
-        TextField kohviSisend = new TextField();
+        ostaKohviNupp = new Button("Osta Kohvi");
+        kohviSisend = new TextField();
         kohviSisend.setPromptText("Sisesta valiku number");
 
         ostaKohviNupp.setOnAction(e -> {
@@ -132,8 +148,8 @@ public class MasinaApp extends Application {
         VBox snäkiPaneel = new VBox(10);
         ListView<String> snäkiListView = new ListView<>();
         uuendaSnäkiList(snäkiListView);
-        Button ostaSnäkiNupp = new Button("Osta Snäkki");
-        TextField snäkiSisend = new TextField();
+        ostaSnäkiNupp = new Button("Osta Snäkki");
+        snäkiSisend = new TextField();
         snäkiSisend.setPromptText("Sisesta toote number");
 
         ostaSnäkiNupp.setOnAction(e -> {
