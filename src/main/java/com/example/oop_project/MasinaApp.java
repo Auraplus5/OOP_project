@@ -137,7 +137,7 @@ public class MasinaApp extends Application {
                 kohviSisend.clear();
             } catch (NumberFormatException | IndexOutOfBoundsException ex) {
                 näitaHoiatust("Vale sisend", "Palun sisestage korrektne valiku number.");
-            } catch (MasinRikkisErind | KohimasinaErind ex) {
+            } catch (MasinRikkisErind | KohvimasinaErind ex) {
                 näitaHoiatust("Hoiatus!", ex.getMessage());
             }
         });

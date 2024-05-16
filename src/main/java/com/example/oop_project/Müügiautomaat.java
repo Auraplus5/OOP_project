@@ -5,6 +5,6 @@ package com.example.oop_project;
  */
 public interface Müügiautomaat {
     void väljastaToodeteHinnad() throws MasinRikkisErind;
-    double sooritaOst(int tooteNumber, double raha) throws MasinRikkisErind, KohimasinaErind, SnäkiautomaatErind;
+    double sooritaOst(int tooteNumber, double raha) throws MasinRikkisErind, KohvimasinaErind, SnäkiautomaatErind;
     boolean kontroll(double raha);
 }
