@@ -1,0 +1,3 @@
+Snickers,1.99,4
+Potato Chips,1.49,10
+Coca-Cola,1.29,3
