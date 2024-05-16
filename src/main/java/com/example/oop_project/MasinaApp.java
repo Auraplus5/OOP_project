@@ -51,7 +51,7 @@ public class MasinaApp extends Application {
         Tab snäkiTab = new Tab("Snäkiautomaat", looSnäkiPaneel());
         tabPane.getTabs().addAll(kohviTab, snäkiTab);
 
-        // Disable buy buttons and input fields initially
+
         ostaKohviNupp.setDisable(true);
         kohviSisend.setDisable(true);
         ostaSnäkiNupp.setDisable(true);
