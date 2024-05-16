@@ -96,8 +96,7 @@ public class Kohviautomaat implements Müügiautomaat {
         }
 
         if (tooteNumber < 1 || tooteNumber > pakutavadKohvid.size()) { // Kontrollime, kas valitud toode on olemas
-            System.out.println("Sellist toodet ei ole olemas!");
-            return raha;
+            throw new KohvimasinaErind("Vale toote number", raha);
         } else {
             Kohv valitudKohv = pakutavadKohvid.get(tooteNumber - 1);
             if (raha < valitudKohv.getKohviHind()) { // Kontrollime, kas raha on piisavalt
